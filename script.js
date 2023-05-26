@@ -80,7 +80,8 @@ class APP {
     const { latitude } = position.coords;
     const { longitude } = position.coords;
     // lat, longi for shenzhen
-    const coords = [22.5429, 114.0596];
+    //const coords = [22.5429, 114.0596];
+    const coords = [latitude, longitude];
     console.log(latitude, longitude);
     this.#map = L.map('map').setView(coords, 13);
 
@@ -91,7 +92,7 @@ class APP {
 
     this.#map.on('click', this._showForm.bind(this));
 
-    this.#workouts.forEach(workout => {
+    this.#workouts.forEach((workout) => {
       this._renderWorkoutMarker(workout);
     });
   }
@@ -117,8 +118,8 @@ class APP {
   }
   _newWorkout(e) {
     const validInputs = (...inputs) =>
-      inputs.every(inp => Number.isFinite(inp));
-    const allPositive = (...inputs) => inputs.every(inp => inp > 0);
+      inputs.every((inp) => Number.isFinite(inp));
+    const allPositive = (...inputs) => inputs.every((inp) => inp > 0);
     e.preventDefault();
     const type = inputType.value;
     const distance = +inputDistance.value;
@@ -226,7 +227,7 @@ class APP {
     const workoutEl = e.target.closest('.workout');
     if (!workoutEl) return;
     const workout = this.#workouts.find(
-      workout => workout.id === workoutEl.dataset.id
+      (workout) => workout.id === workoutEl.dataset.id
     );
     this.#map.setView(workout.coords, 13, {
       animate: true,
@@ -242,7 +243,7 @@ class APP {
     const data = JSON.parse(localStorage.getItem('workouts'));
     if (!data) return;
     this.#workouts = data;
-    this.#workouts.forEach(workout => {
+    this.#workouts.forEach((workout) => {
       this._renderWorkout(workout);
     });
   }
